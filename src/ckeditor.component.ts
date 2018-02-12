@@ -153,17 +153,19 @@ export class CKEditorComponent implements OnChanges, AfterViewInit {
         this.onTouched();
         let value = this.instance.getData();
 
-        // Debounce update
-        if (this.debounce) {
-          if (this.debounceTimeout) clearTimeout(this.debounceTimeout);
-          this.debounceTimeout = setTimeout(() => {
-            this.updateValue(value);
-            this.debounceTimeout = null;
-          }, parseInt(this.debounce));
+        if (this.value !== value) {
+          // Debounce update
+          if (this.debounce) {
+            if (this.debounceTimeout) clearTimeout(this.debounceTimeout);
+            this.debounceTimeout = setTimeout(() => {
+              this.updateValue(value);
+              this.debounceTimeout = null;
+            }, parseInt(this.debounce));
 
-          // Live update
-        } else {
-          this.updateValue(value);
+            // Live update
+          } else {
+            this.updateValue(value);
+          }
         }
 
         // Original ckeditor event dispatch
